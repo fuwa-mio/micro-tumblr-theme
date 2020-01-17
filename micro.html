@@ -1,0 +1,650 @@
+<!-- 
+    Theme by Tears Radar, version (develop) (2020-01-17)
+    find the theme here: https://github.com/fuwa-mio/micro-tumblr-theme
+ -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            {Title}
+            {block:TagPage}- #{Tag}{/block:TagPage}
+            {block:SearchPage}-
+                {lang:SearchResultCount results for SearchQuery}
+                {block:NoSearchResults}
+                    {lang:No results for SearchQuery}
+                {/block:NoSearchResults}
+            {/block:SearchPage}
+            {block:PostSummary}- {PostSummary}{/block:PostSummary}
+        </title>
+        {block:Description}
+            <meta name="description" content="{MetaDescription}" />
+        {/block:Description}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="{AccentColor}" />
+        <link rel="shortcut icon" href="{Favicon}"/>
+        <!-- Apple being a bit special -->
+        <link rel="apple-touch-icon" href="{Favicon}"/>
+        <meta name="apple-mobile-web-app-title" content="Tumblr - {Title}" />
+        <!-- RSS is cool -->
+        <link rel="alternate" type="application/rss+xml" href="{RSS}"/>
+        <!-- Meta ifs -->
+        <meta name="if:Profile Hover Shadow" content="1" />
+        <meta name="if:Show Search Box" content="1" />
+        <!-- Meta colors -->
+        <meta name="color:Text" content="#333333"/>
+        <meta name="color:Links" content="{AccentColor}"/>
+        <!-- CSS -->
+        <style type="text/css">
+      html {
+          background-color: {BackgroundColor};
+          color: {color:Text};
+          font-size: 16px;
+          -webkit-text-size-adjust: 100%;
+          -moz-text-size-adjust: 100%;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", "Clear Sans", sans-serif;
+          margin: 0;
+          padding: 0;
+      }
+      
+      html, body {
+          min-width: 18rem;
+      }
+      
+      header {
+          text-align: center;
+          display: table;
+          width: 100%;
+          margin: 2.5em 0 1em;
+      }
+      
+      body {
+          max-width: 40rem;
+          margin-left: auto;
+          margin-right: auto;
+          padding: 1rem;
+      }
+
+      nav {
+          margin: 1em auto 0px;
+          width: 100%;
+          max-width: 500px;
+          overflow-x: auto;
+      }
+
+      nav a {
+          margin-right: 0.5rem;
+      }
+
+      h1 {
+	      color: {TitleColor};
+          font-weight: {TitleFontWeight};
+          font-size: 2em;
+          margin-top: 0;
+          margin-bottom: 0;
+          font-family: {TitleFont};
+      }
+
+      a {
+          color: {color:Links};
+	      text-decoration: none;
+      }
+      
+      del {
+          text-decoration: line-through;
+      }
+
+      a:hover {
+          text-decoration: underline;
+      }
+
+      .caption {
+          text-align: left;
+      }
+
+      .clear {
+          zoom: 1;
+      }
+
+      .clear:before .clear:after {
+          content: "\0020";
+          display: block;
+          height: 0;
+          overflow: hidden;
+      }
+
+      .clear:after {
+          clear: both;
+      }
+
+      #description {
+          color: {color:TextColour};
+          font-size: 0.875em;
+          margin-top: 5px;
+          margin-bottom: 12px;
+          line-height: 140%;
+      }
+
+      .profile-image {
+          margin: 1.2rem 0;
+          max-height: 100px;
+          transition: all 0.2s ease-in-out;
+      }
+      
+      .profile-image.-square {
+          border-radius: 0%;
+      }
+      
+      .profile-image.-circle {
+          border-radius: 100%;
+      }
+      
+      {block:IfProfileHoverShadow}
+      .profile-image:hover {
+          box-shadow: 0 1px 6px rgba(0, 0, 0, 0.33);
+      }
+      {/block:IfProfileHoverShadow}
+
+      form {
+          display: flex;
+          flex-direction: row;
+      }
+
+      form input[type="text"] {
+          background: #ffffff;
+          color: {color:Text};
+          border: 1px solid #ccc;
+          padding: 1em;
+          border-radius: 0px;
+          width: 80%;
+          margin-right: 3px;
+          transition: box-shadow 0.2s ease-in-out;
+          -webkit-appearance: none;
+      }
+
+      form input[type="text"]:hover {
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      }
+
+      form input[type="submit"] {
+          background: #ffffff;
+          color: {color:Text};
+          border: 1px solid #ccc;
+          border-radius: 0px;
+          padding: 1em;
+          width: 20%;
+          margin-left: 3px;
+          transition: box-shadow 0.2s ease-in-out;
+          -webkit-appearance: none;
+      }
+
+      form input[type="submit"]:hover {
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+          cursor: pointer;
+      }
+      
+      /* a lot of this could be shared with `.post` */
+      .perma-notes {
+          background-color: #ffffff;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+          padding: 1.25rem 1rem 0;
+          max-height: 32rem;
+          max-width: 940px;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          font-size: 13px;
+          overflow-y: auto;
+          margin-bottom: 2rem;
+      }
+      
+      .perma-notes > .notes > .note > a {
+          padding-right: 0.5em;
+          vertical-align: sub;
+      }
+      
+      .post, .tag-search-header {
+          background: #ffffff;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+          padding: 10px 20px;
+          font-size: 13px;
+          line-height: 140%;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+          max-width: 940px;
+      }
+      
+      .post.photo img {
+          margin: 0 auto;
+          display: block;
+      }
+
+      .post.photoset .photoset-photos {
+          margin: auto;
+          text-align: center;
+      }
+      
+      .post-meta {
+          border-top: 1px solid rgba(0, 0, 0, 0.1);
+          padding-top: 0.5em;
+          margin-top: 0.5em;
+      }
+      
+      .post a {
+          word-break: break-word;
+      }
+      
+      .post .caption blockquote,
+      .post.text blockquote {
+          margin: 0;
+          border-left: 2px solid {color:Text};
+          padding-left: 0.5em;
+      }
+      
+      .post .caption blockquote > .tumblr_blog,
+      .post .caption blockquote > blockquote {
+          margin-left: 0.5em;
+      }
+      
+      .post.text > blockquote img {
+          display: block;
+          margin: auto auto 1em;
+      }
+
+      .tag-search-header {
+          margin-top: 1.5em;
+          margin-bottom: 1.5em;
+      }
+
+      .tag-search-header h2 {
+          text-align: center;
+          font-weight: normal;
+          font-size: 1.4em;
+      }
+      
+      iframe.tumblr_audio_player {
+          max-width: 100%;
+      }
+
+      img {
+          height: auto;
+          max-width: 100%;
+      }
+
+      ol {
+          padding: 0;
+          list-style-type: none;
+      }
+
+      li {
+          margin-bottom: 1.5rem;
+      }
+      
+      .responsive-video, .tmblr-embed {
+          padding-bottom: 56.25%;
+          position: relative;
+          padding-top: 25px;
+          height: 0;
+          overflow: hidden;
+      }
+      
+      .responsive-video iframe, 
+      .responsive-video object, 
+      .responsive-video embed,
+      .tmblr-embed iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+      }
+      
+      .note-count, .like_button, .reblog_button {
+          display: inline-block !important;
+      }
+      
+      .like_toggle, .reblog_button {
+          padding-left: 0.5em;
+      }
+      
+      a.note-count {
+          margin: 0;
+          vertical-align: top;
+      }
+      
+      .tags a {
+          margin-right: 0.275em;
+          opacity: 0.75;
+          transition: opacity 0.2s ease-in-out;
+      }
+      
+      .tags a:hover {
+          opacity: 1;
+      }
+      
+      .footer-pagination {
+          display: flex;
+          {block:NextPage}
+          justify-content: flex-end;
+          {/block:NextPage}
+          {block:PreviousPage}
+          {block:NextPage}
+          justify-content: space-between;
+          {/block:NextPage}
+          {/block:PreviousPage}
+      }
+      
+      .footer-meta {
+          text-align: center;
+      }
+
+      {CustomCSS}
+    </style>
+</head>
+<body>
+    <!-- Header stuff (title, desc) -->
+  <header class="clear">
+    <div id="header-content">
+      <a href="{BlogURL}">
+        <img src="{PortraitURL-128}" alt="{Title}'s profile picture" class="profile-image -{AvatarShape}">
+      </a>
+      <h1>{Title}</h1>
+      {block:Description}
+      <p id="description">{Description}</p>
+      {/block:Description}
+    </div>
+    <!-- links to other pages -->
+    <nav>
+      <a href="/">{lang:Posts}</a>
+      {block:SubmissionsEnabled}
+      <a href="/submit">{SubmitLabel}</a>
+      {/block:SubmissionsEnabled}
+      {block:ShareFollowing}
+      <a href="/following">{lang:Following}</a>
+      {/block:ShareFollowing}
+      {block:Likes}
+      <a href="/likes">{lang:Likes}</a>
+      {/block:Likes}
+      {block:AskEnabled}
+      <a href="/ask">{AskLabel}</a>
+      {/block:AskEnabled}
+      {block:HasPages}
+          {block:Pages}
+            <a href="{URL}">{Label}</a>
+          {/block:Pages}
+      {/block:HasPages}
+    </nav>
+  </header>
+  {block:IfShowSearchBox}
+  <form action="/search" method="get">
+    <input type="text" name="q" value="{SearchQuery}" placeholder="{lang:Search}" />
+    <input type="submit" value="{lang:Search}" />
+  </form>
+  {/block:IfShowSearchBox}
+  {block:TagPage}
+  <div class="tag-search-header">
+    <h2>{lang:Posts tagged Tag}</h2>
+  </div>
+  {/block:TagPage}
+  {block:SearchPage}
+  <div class="tag-search-header">
+    <h2>{lang:SearchResultCount results for SearchQuery}</h2>
+    {block:NoSearchResults}
+        <h2>{lang:No results for SearchQuery}</h2>
+    {/block:NoSearchResults}
+  </div>
+  {/block:SearchPage}
+  <!-- Post Layouts -->
+  <ol id="posts">
+    {block:Posts}
+      {block:Text}
+      <li class="post text">
+        {block:Title}
+            <h2>{Title}</h2>
+            <hr />
+        {/block:Title}
+        {Body}
+        <div class="post-meta">
+          {block:NoteCount}
+          <a href="{Permalink}" class="note-count">{NoteCountWithLabel}</a>
+          {/block:NoteCount}
+          {LikeButton color="grey"}
+          {ReblogButton color="grey"}
+          {block:HasTags}
+          <div class="tags">
+  	        {block:Tags}
+        	  <a href="{TagURL}">#{Tag}</a>
+        	  {/block:Tags}
+      	  </div>
+      	  {/block:HasTags}
+    	  </div>
+      </li>
+      {/block:Text}
+      {block:Photo}
+      <li class="post photo">
+        <img src="{PhotoURL-500}" alt="{PhotoAlt}">
+        {block:Caption}
+        <div class="caption">{Caption}</div>
+        {/block:Caption}
+        <div class="post-meta">
+          {block:NoteCount}
+          <a href="{Permalink}" class="note-count">{NoteCountWithLabel}</a>
+          {/block:NoteCount}
+          {LikeButton color="grey"}
+          {ReblogButton color="grey"}
+          <div style="float:right">
+              {block:HighRes}
+                [<a href="{PhotoURL-HighRes}">{lang:High-res photo}</a>]
+              {/block:HighRes}
+          </div>
+          {block:HasTags}
+          <div class="tags">
+  	        {block:Tags}
+        	  <a href="{TagURL}">#{Tag}</a>
+        	  {/block:Tags}
+      	  </div>
+      	  {/block:HasTags}
+    	  </div>
+      </li>
+      {/block:Photo}
+      {block:Panorama}
+      <li class="post panorama">
+        {LinkOpenTag}
+        <img src="{PhotoURL-Panorama}" alt="{PhotoAlt}">
+        {LinkCloseTag}
+        {block:Caption}
+        <div class="caption">{Caption}</div>
+        {/block:Caption}
+        <div class="post-meta">
+          {block:NoteCount}
+          <a href="{Permalink}" class="note-count">{NoteCountWithLabel}</a>
+          {/block:NoteCount}
+          {LikeButton color="grey"}
+          {ReblogButton color="grey"}
+          {block:HasTags}
+          <div class="tags">
+  	        {block:Tags}
+        	  <a href="{TagURL}">#{Tag}</a>
+        	  {/block:Tags}
+      	  </div>
+      	  {/block:HasTags}
+    	  </div>
+      </li>
+      {/block:Panorama}
+      {block:Photoset}
+      <li class="post photoset">
+        <div class="photoset-photos">
+	        {block:Photos}
+      	  <img src="{PhotoURL-500}" width="{PhotoWidth-500}" height="{PhotoHeight-500}" />
+        	  {block:Caption}{Caption}{/block:Caption}
+      	  {/block:Photos}
+      	</div>
+        {block:Caption}
+        <div class="caption">{Caption}</div>
+        {/block:Caption}
+        <div class="post-meta">
+          {block:NoteCount}
+          <a href="{Permalink}" class="note-count">{NoteCountWithLabel}</a>
+          {/block:NoteCount}
+          {LikeButton color="grey"}
+          {ReblogButton color="grey"}
+          {block:HasTags}
+          <div class="tags">
+  	        {block:Tags}
+        	  <a href="{TagURL}">#{Tag}</a>
+        	  {/block:Tags}
+      	  </div>
+      	  {/block:HasTags}
+    	  </div>
+      </li>
+      {/block:Photoset}
+      {block:Quote}
+      <li class="post quote">
+        "{Quote}"
+        {block:Source}
+        <div class="source">{Source}</div>
+        {/block:Source}
+        <div class="post-meta">
+          {block:NoteCount}
+          <a href="{Permalink}" class="note-count">{NoteCountWithLabel}</a>
+          {/block:NoteCount}
+          {LikeButton color="grey"}
+          {ReblogButton color="grey"}
+          {block:HasTags}
+          <div class="tags">
+  	        {block:Tags}
+        	  <a href="{TagURL}">#{Tag}</a>
+        	  {/block:Tags}
+      	  </div>
+      	  {/block:HasTags}
+    	  </div>
+      </li>
+      {/block:Quote}
+      {block:Link}
+      <li class="post link">
+        <a href="{URL}" class="link" {Target}>{Name}</a>
+        {block:Description}
+        <div class="description">{Description}</div>
+        {/block:Description}
+        <div class="post-meta">
+          {block:NoteCount}
+          <a href="{Permalink}" class="note-count">{NoteCountWithLabel}</a>
+          {/block:NoteCount}
+          {LikeButton color="grey"}
+          {ReblogButton color="grey"}
+          {block:HasTags}
+          <div class="tags">
+  	        {block:Tags}
+        	  <a href="{TagURL}">#{Tag}</a>
+        	  {/block:Tags}
+      	  </div>
+      	  {/block:HasTags}
+    	  </div>
+      </li>
+      {/block:Link}
+      {block:Chat}
+      <li class="post chat">
+        {block:Title}
+        <h3><a href="{Permalink}">{Title}</a></h3>
+        {/block:Title}
+
+        <ul class="chat">
+          {block:Lines}
+          <li class="{Alt}" user_{UserNumber}>
+            {block:Label}
+            <span class="label">{Label}</span>
+            {/block:Label}
+            {Line}
+          </li>
+          {/block:Lines}
+        </ul>
+        <div class="post-meta">
+          {block:NoteCount}
+          <a href="{Permalink}" class="note-count">{NoteCountWithLabel}</a>
+          {/block:NoteCount}
+          {LikeButton color="grey"}
+          {ReblogButton color="grey"}
+          {block:HasTags}
+          <div class="tags">
+  	        {block:Tags}
+        	  <a href="{TagURL}">#{Tag}</a>
+        	  {/block:Tags}
+      	  </div>
+      	  {/block:HasTags}
+    	  </div>
+      </li>
+      {/block:Chat}
+      {block:Video}
+      <li class="post video">
+        <div class="responsive-video">
+          {Video-700}
+        </div>
+        {block:Caption}
+        <div class="caption">{Caption}</div>
+        {/block:Caption}
+        <div class="post-meta">
+          {block:NoteCount}
+          <a href="{Permalink}" class="note-count">{NoteCountWithLabel}</a>
+          {/block:NoteCount}
+          {LikeButton color="grey"}
+          {ReblogButton color="grey"}
+          {block:HasTags}
+          <div class="tags">
+  	        {block:Tags}
+        	  <a href="{TagURL}">#{Tag}</a>
+        	  {/block:Tags}
+      	  </div>
+      	  {/block:HasTags}
+    	  </div>
+      </li>
+      {/block:Video}
+      {block:Audio}
+      <li class="post audio">
+        {AudioEmbed}
+        {block:Caption}
+        <div class="caption">{Caption}</div>
+        {/block:Caption}
+        <div class="post-meta">
+          {block:NoteCount}
+          <a href="{Permalink}" class="note-count">{NoteCountWithLabel}</a>
+          {/block:NoteCount}
+          {LikeButton color="grey"}
+          {ReblogButton color="grey"}
+          {block:HasTags}
+          <div class="tags">
+  	        {block:Tags}
+        	  <a href="{TagURL}">#{Tag}</a>
+        	  {/block:Tags}
+      	  </div>
+      	  {/block:HasTags}
+    	  </div>
+      </li>
+      {/block:Audio}
+      
+      <!-- Permalink Pages Note Display -->
+      {block:PostNotes}
+        <div class="perma-notes">
+            {PostNotes-16}
+        </div>
+      {/block:PostNotes}
+    {/block:Posts}
+  </ol>
+    <footer>
+        {block:Pagination}
+            <div class="footer-pagination">
+                {block:PreviousPage}
+                    <a href="{PreviousPage}">&#171; {lang:Previous}</a>
+                {/block:PreviousPage}
+                {block:NextPage}
+                    <a href="{NextPage}">{lang:Next} &#187;</a>
+                {/block:NextPage}
+            </div>
+        {/block:Pagination}
+        <div class="footer-meta">
+            <!-- Will use this later, need to register the theme first
+            <p>{lang:Install this theme}</p>
+            -->
+            <p>
+                Theme by <a href="https://tears-radar.tumblr.com">Tears Radar</a>
+            </p>
+        </div>
+  </footer>
+</body>
+</html>

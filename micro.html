@@ -1,5 +1,5 @@
 <!-- 
-    Theme by Tears Radar, version (develop) (2020-01-31)
+    Theme by Tears Radar, version (develop) (2020-02-01)
     find the theme here: https://github.com/fuwa-mio/micro-tumblr-theme
  -->
 <!DOCTYPE html>
@@ -32,6 +32,8 @@
         <meta name="if:Profile Hover Shadow" content="1" />
         <meta name="if:Show Search Box" content="1" />
         <meta name="if:Show Link Underline" content="0" />
+        <meta name="if:Show Copyright" content="0" />
+        <meta name="if:Show Copyright Years" content="0" />
         <!-- Meta colors -->
         <meta name="color:Text" content="#333333"/>
         <meta name="color:Links" content="{AccentColor}"/>
@@ -60,8 +62,7 @@
         }
         
         body {
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto;
             max-width: 40rem;
             padding: 1rem;
         }
@@ -318,6 +319,11 @@
             text-align: center;
         }
         
+        .theme-credits {
+            font-size: 80%;
+            margin: 0;
+        }
+
         {CustomCSS}
         </style>
     </head>
@@ -622,10 +628,26 @@
             </div>
         {/block:Pagination}
         <div class="footer-meta">
+            {block:IfShowCopyright}
+                {block:IfNotShowCopyrightYears}
+                    <p>&copy;</p>
+                {/block:IfNotShowCopyrightYears}
+            {/block:IfShowCopyright}
+            {block:IfNotShowCopyright}
+                {block:IfShowCopyrightYears}
+                    <p>{CopyrightYears}</p>
+                {/block:IfShowCopyrightYears}
+            {/block:IfNotShowCopyright}
+            {/block:IfNotShowCopyright}
+            {block:IfShowCopyright}
+                {block:IfShowCopyrightYears}
+                    <p>&copy; {CopyrightYears}</p>
+                {block:IfShowCopyrightYears}
+            {/block:IfShowCopyright}
             <!-- Will use this later, need to register the theme first
             <p>{lang:Install this theme}</p>
             -->
-            <p>
+            <p class="theme-credits">
                 Theme by <a href="https://tears-radar.tumblr.com">Tears Radar</a>
             </p>
         </div>

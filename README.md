@@ -58,10 +58,8 @@ __your-username.tumblr.com__*
 - **Profile Hover Shadow** - Enable or disable a drop-shadow from showing when
 your profile picture is hovered over.
 - **Show Search Box** - Enable or disable the search box
-- ~~**Show Copyright** - Show or hide the copyright symbol~~ (temporarily
-removed)
-- ~~**Show Blog Years** -  Show or hide your blog's running years. (Also hides
-copyright symbol)~~ (temporarily removed)
+- **Show Copyright** - Show or hide the copyright symbol
+- **Show Copyright Years** -  Show or hide your blog's running years
 
 Support
 -------
@@ -72,7 +70,6 @@ Roadmap
 -------
 
 * Finish styling each post type
-* Option to show hide copytight/years
 * Organize CSS
 
 License

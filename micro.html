@@ -1,5 +1,5 @@
 <!-- 
-    Theme by Tears Radar, version (develop) (2020-02-06)
+    Theme by Tears Radar, version (develop) (2020-02-22)
     find the theme here: https://github.com/fuwa-mio/micro-tumblr-theme
  -->
 <!DOCTYPE html>
@@ -38,6 +38,7 @@
         <!-- Meta colors -->
         <meta name="color:Text" content="#333333"/>
         <meta name="color:Links" content="{AccentColor}"/>
+        <meta name="color:PostBackground" content="#ffffff" />
         <!-- CSS -->
         <style type="text/css">
         html {
@@ -141,7 +142,7 @@
         form input[type="text"] {
             -webkit-appearance: none;
             background: #ffffff;
-            color: {color:Text};
+            color: #000;
             border: 1px solid #ccc;
             padding: 1em;
             border-radius: 0px;
@@ -159,7 +160,7 @@
             background: #ffffff;
             border: 1px solid #ccc;
             border-radius: 0px;
-            color: {color:Text};
+            color: #000;
             margin-left: 3px;
             padding: 1em;
             transition: all 0.2s ease-in-out;
@@ -191,7 +192,7 @@
         .post,
         .perma-notes,
         .tag-search-header {
-            background-color: #fff;
+            background-color: {color:PostBackground};
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
             font-size: 14px;
